@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品编辑</title>
+    <script type="text/javascript" src="../static/admin/js/jquery-1.12.4.min.js"></script>
+  
+</head>
+<body class="inframe_body">
+    <form class="/sadmin/add_property/" method="post" enctype="multipart/form-data">
+
+        <h3>添加分类</h3>
+        <div class="form-group"><label>属性名称：</label><input type="text" class="input_txt2" name="name" value="{{g.name}}">
+            <input type="hidden" value="{{g.id}}" name="fenlei">
+        </div>
+        <div class="form-group">
+                <label>商品类型</label>
+
+                <select class="sel_opt" name="leixing">
+                    {% for category in good %}
+                         <option value="{{ category.id }}"  {% if goods.cid.id == category.id %} selected {% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+    
+                </select>
+
+                        <div class="form-group"><label>分类筛选样式</label><input type="radio" name="aa" id="" value="1" {% if g.filter_type == 1 %} checked {% endif %} >普通<input type="radio" value="2" name="aa" id="" {% if g.filter_type == 2 %} checked {% endif %} >颜色</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>能否进行检索</label><input type="radio" value="0" name="bb" id="" {% if g.is_select == 0 %} checked {% endif %} >不需要检索<input type="radio" value="1" name="bb" id="" {% if g.is_select == 1 %} checked {% endif %} >关键字检索<input type="radio" value="2" name="bb" id="" {% if g.is_select == 2 %} checked {% endif %}>范围检索</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>商品属性关联</label><input type="radio" value="0" name="cc" id="" {% if g.related_status == 0 %} checked {% endif %} >是<input type="radio" value="1" name="cc" id="" {% if g.related_status == 1 %} checked {% endif %}>否</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>属性是否可选</label><input type="radio" value="0" name="dd" id="" {% if g.select_type == 0 %} checked {% endif %} >唯一<input type="radio" value="1" name="dd" id="" {% if g.select_type == 1 %} checked {% endif %} >单选<input type="radio" value="2" name="dd" id="" {% if g.select_type == 2 %} checked {% endif %} >复选</div>
+
+                        <div class="form-group"><label>属性值录入方式</label><input type="radio" value="0" name="ff" id="" {% if g.input_type == 0 %} checked {% endif %} >手工<input type="radio" value="1" name="ff" id="" {% if g.input_type == 1 %} checked {% endif %} >列表</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>属性值可选列表</label><input type="text" name="shuxing" id="" value="{{g.input_list}}"></div>
+
+
+                        <div class="form-group"><label>是否支持手动新增</label><input type="radio" value="0" name="ee" id="" {% if g.hand_add_status == 0 %} checked {% endif %} >是<input type="radio" value="1" name="ee" id="" {% if g.hand_add_status == 1 %} checked {% endif %} >否</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>排序属性</label><input type="text" name="paixu" id="" value="{{g.sort}}"></div>
+                        
+                        <input type="hidden" name="id" value="{{id}}">
+
+
+        <input name="goods_id" class="goods_id" value="{{goods.id}}" hidden>
+        <div class="form-group">            
+            <input type="submit" value="提交" class="confirm">
+        </div>
+
+    </form>
+
+    <script>
+       
+    </script>
+</body>
+</html>

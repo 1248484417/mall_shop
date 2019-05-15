@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/main.css">
+    <script>
+            $(document).ready(function () {
+                    var time = new Date();
+                    var day = ("0" + time.getDate()).slice(-2);
+                    var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                    var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                    $('#date_info').val(today);
+                })
+            $(document).ready(function () {
+                    var time = new Date();
+                    var day = ("0" + time.getDate()).slice(-2);
+                    var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                    var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                    $('#date_infos').val(today);
+                })
+
+    </script>
+</head>
+<body>
+        {%if messages %}
+        {% for manage in messages%}
+        {{manage.message}}
+        {%endfor %}
+        {%endif%}
+    <form action="" method="post">
+        活动标题<input type="text" name="name" id="" value="{{ceckil.name}}">
+        <br>
+        开始时间<input type="date" id="date_info" class="date" name="start_time" value="{{ceckil.start_time}}"/>
+        <br>
+        结束时间<input type="date" id="date_infos" class="date" name="end_time" value="{{ceckil.end_time}}" /></p>
+        <br>
+        
+
+        <div class="form-group"><label>是否上线</label><input type="radio" value="1" name="ss" id="" {% if ceckil.state == 1 %} checked {% endif %} >是<input type="radio" value="0" name="ss" id="" {% if ceckil.state == 0 %} checked {% endif %} >否</div>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

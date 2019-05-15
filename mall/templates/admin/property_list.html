@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新经资讯后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	
+</head>
+<body>
+	<div class="breadcrub">
+			当前位置：新闻管理>新闻分类管理
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<th width="10%">id</th>
+					<th width="10%">属性名称</th>
+					<th width="10%">商品类型</th>
+					<th width="10%">属性是否可选</th>
+					<th width="10%">属性值录入方式</th>
+					<th width="30%">可选值列表</th>
+					<th width="10%">排序</th>
+					<th width="10%">操作</th>
+				</tr>
+				{% for i in good %}
+				<tr>
+					<th width="10%">{{i.id}}</th>
+					<th width="10%">{{i.name}}</th>
+					<th width="10%">{{i.type_id.name}}</th>
+					{% if i.select_type == 0 %}
+					<th width="10%">唯一</th>
+					{% elif i.select_type == 1 %}
+					<th width="10%">单选</th>
+					{% elif i.select_type == 1 %}
+					<th width="10%">多选</th>
+					{% endif %}
+					{% if i.input_type == 0 %}
+					<th width="10%">手工录入</th>
+					{% elif i.input_type == 1 %}
+					<th width="10%">列表中选取</th>
+					{% endif %}
+					<th width="30%">{{i.input_list}}</th>
+					<th width="10%">{{i.sort}}</th>
+                    <td width="10%">
+                        <a href="/sadmin/add_property?id={{id}}&shuxingid={{i.id}}" class="edit">编辑</a>
+                        <a href="/sadmin/delete_pro?id={{i.id}}&name={{i.type_id.id}}" class="delete">删除</a>
+                    </td>
+				</tr>
+				{% endfor %}
+				
+
+				<tr>
+					<td colspan="10"><a href="/sadmin/add_property?id={{id}}" class="addtype">添加属性</a></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" name='name' class="input_txt3">
+                       
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+</html>

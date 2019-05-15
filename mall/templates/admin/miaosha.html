@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新经资讯后台管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+</head>
+
+    
+        <tr>
+            
+        </tr>
+ 
+<body>
+	<div class="breadcrub">
+		<h3><a href="/sadmin/add_miaosha">添加</a></h3>
+		<form method="GET">
+				<input name="searchtitle" type="text" />&nbsp;&nbsp;<input type="submit" value="搜索" />
+			</form>
+			<a href="/sadmin/miaosha_time_list/">秒杀时间段列表</a>
+		
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<td width="10%">编号</td>
+					<td width="40%">活动标题</td>
+					<td width="10%">活动状态</td>
+					<td width="10%">开始时间</td>
+					<td width="10%">结束时间</td>
+					<td width="10%">上线/下线</td>
+					<td width="10%">操作</td>
+                    
+				</tr>
+				{% for item in ceckil %}
+				<tr>
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					{% if item.end_time > data_time %}
+					<td>活动进行中</td>
+					{% else %}
+					<td>活动已结束</td>
+					{% endif %}
+					<td>{{item.start_time}}</td>
+					<td>{{item.end_time}}</td>
+					<td><input type="radio" id="hid" {% if item.state == 1 %} checked {% else %}  {% endif %} ></td>
+					<td width="10%">
+							<a href="/sadmin/add_miaosha/?id={{item.id}}">编辑</a>
+							<a href="/sadmin/delete_miaosha/?id={{item.id}}">删除</a>
+						</td>
+					
+				</tr>
+				{% endfor %}
+				
+
+				
+			</table>
+		</div>
+
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" name='name' class="input_txt3">
+                       
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+</html>

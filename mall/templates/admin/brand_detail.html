@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新经资讯后台管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+    <script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+    <script src="../../static/admin/tinymce/js/tinymce/tinymce.min.js"></script>
+    
+</head>
+<body>
+    <div class="breadcrub">
+            
+        </div>
+        <div class="pannel">
+            <form method="POST" enctype="multipart/form-data" action="/sadmin/brand__detail">
+                
+            <div class="form_group">
+                <label>品牌名称</label>
+                <input type="text" name="name" value="{{bar.name}}">
+            </div>
+            <div class="form_group">
+                    <label>品牌首字母</label>
+                    <div class="category_name"></div>
+                    <input type="text" name="s_name" value="{{bar.first}}" >
+            </div>
+            
+            <div class="form_group">
+                <label>品牌LOGO</label>
+                <img src="../../" alt="索引图片" class="index_pic">
+                <input type="file" name="s_img" value="{{bar.logo}}"/>
+            </div>
+            <div class="form_group">
+                <label>品牌专区大图</label>
+                <div class="rich_wrap fl">
+                    <img src="../../" alt="索引图片" class="index_pic">
+                    <input type="file" name="b_img" value="{{bar.b_logo}}"/>
+                </div>
+            </div>
+            <div class="form_group">
+                <label>品牌故事</label>
+                <div class="category_name">
+                    <input type="text" name="story" value="{{bar.story}}"/>
+                </div>
+                
+            </div>
+            <div class="form_group">
+                <label>排序</label>
+                <div class="category_name">
+                    <input type="text" name="sort" value="{{bar.sort}}"/>
+                </div>
+                
+            </div>
+            <div class="form_group">
+                <label>是否显示</label><br />
+                <div class="category_name">
+                    是<input type="radio" value="0" name="xianshi" class="id_show"/>
+                    否<input type="radio" value="1" name="xianshi" class="id_show"/>
+                </div>
+                
+            </div>
+            <div class="form_group">
+                <label>品牌制造商</label><br />
+                <div class="category_name">
+                    是<input type="radio" value="0" name="pin" class="shang"/>
+                    否<input type="radio" value="1" name="pin" class="shang"/>
+                </div>
+                
+            </div>
+            <button type="submit" value="提交">提交</button>
+                
+
+            </form>    
+        </div>
+        
+        <script>
+        $(function(){
+            var $radio = $('input[name="action"]');
+            $radio.click(function(){
+                if($(this).index()==1)
+                {
+                    $('.group_hide').show();
+                }
+                else{
+                    $('.group_hide').hide();
+                }
+            });
+
+            tinymce.init({
+                //选择class为content的标签作为编辑器
+                selector: '#rich_content',
+                //方向从左到右
+                directionality:'ltr',
+                //语言选择中文
+                language:'zh_CN',
+                //高度为400
+                height:400,
+                width: '100%',
+                //按tab不换行
+                nonbreaking_force_tab: true,
+                readonly:1
+            });
+            
+            })        
+        </script>    
+</body>
+
+
+
+
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/main.css">
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="http://www.86y.org/demo/selecttime/selectime.js"></script>
+</head>
+<body>
+        {%if messages %}
+        {% for manage in messages%}
+        {{manage.message}}
+        {%endfor %}
+        {%endif%}
+    <form action="" method="post">
+        秒杀时间段名称<input type="text" name="name" id="" value="{{ceckil.name}}">
+        <br>
+        <br>
+        <br>
+        <br>
+        开始时间<input type="text" class="txt selecttime" readonly value="{{ceckil.start_time}}" id="dtime1" name="start_time" />
+        <br>
+        <br>
+        <br>
+        <br>
+        结束时间<input type="text" class="txt selecttime" readonly value="{{ceckil.end_time}}" id="dtime2" name="end_time" />
+        <br>
+        <br>
+        <br>
+        <br>
+        
+
+        <div class="form-group"><label>是否启用</label><input type="radio" value="1" name="ss" id="" {% if ceckil.state == 1 %} checked {% endif %} >是<input type="radio" value="0" name="ss" id="" {% if ceckil.state == 0 %} checked {% endif %} >否</div>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

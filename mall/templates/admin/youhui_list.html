@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新经资讯后台管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+</head>
+
+    
+        <tr>
+            
+        </tr>
+ 
+<body>
+	<div class="breadcrub">
+		<h3><a href="/sadmin/add_youhuijuan/">添加</a></h3>
+		<form method="GET">
+				<input name="searchtitle" type="text" />&nbsp;&nbsp;<input type="submit" value="搜索" />
+			</form>
+		
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<td width="10%">编号</td>
+					<td width="20%">优惠卷名称</td>
+					<td width="10%">优惠卷类型</td>
+					<td width="5%">可使用商品</td>
+					<td width="5%">使用门槛</td>
+					<td width="10%">面值</td>
+					<td width="10%">适用平台</td>
+					<td width="10%">有效期</td>
+					<td width="10%">状态</td>
+					<td width="15%">操作</td>
+
+
+				</tr>
+				{% for item in coupon %}
+				<tr>
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					{% if item.type == 0%}
+					<td>全场赠券</td>
+					{% elif item.type == 1%}
+					<td>会员赠券</td>
+					{% elif item.type == 2%}
+					<td>购物赠券</td>
+					{% elif item.type == 3%}
+					<td>注册赠券</td>
+					{% endif %}
+					{% if item.goods_use == 0%}
+					<td>全场通用</td>
+					{% elif item.goods_use == 1%}
+					<td>指定分类</td>
+					{% elif item.goods_use == 2%}
+					<td>指定商品</td>
+					{% endif %}
+					<td>{{item.doorsill}}</td>   {# 使用门槛 #}
+					<td>{{item.miane}}</td>     {# 面值 #}
+					{% if item.pingtai == 0%}
+					<td>全场通用</td>
+					{% elif item.pingtai == 1%}
+					<td>移动平台</td>
+					{% elif item.pingtai == 2%}
+					<td>PC平台</td>
+					{% endif %}
+					<td>{{item.start_time}}至{{item.end_time}}</td>
+					{% if item.state == 0%}
+					<td>过期</td>
+					{% elif item.state == 1%}
+					<td>未过期</td>
+					{% endif %}
+					<td width="10%">
+							<a href="/sadmin/add_youhuijuan/?id={{item.id}}">编辑</a>
+							<a href="/sadmin/delete_youhui/?id={{item.id}}">删除</a>
+						</td>
+					
+				</tr>
+				{% endfor %}
+				
+
+				
+			</table>
+		</div>
+
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" name='name' class="input_txt3">
+                       
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+</html>

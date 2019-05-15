@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+    <script src="../../static/admin/js/jquery.form.min.js"></script>
+    <script src="../../static/admin/tinymce/js/tinymce/tinymce.min.js"></script>    
+    <script src="../../static/admin/js/tinymce_setup.js"></script>
+    <script src="../../static/admin/js/jquery.cxselect.js"></script>
+    <script src="../../static/admin/js/jquery.cxselect.min.js"></script>
+    <script src="../../static/admin/js/jquery.cxselect.js"></script>
+    <title>Document</title>
+</head>
+<script type="text/javascript">
+    $(function () {
+        $.cxSelect.defaults.url = '/sadmin/add_goods/'; // 提示：如果服务器不支持 .json 类型文件，请将文件改为 .js 文件
+        $.cxSelect.defaults.nodata = 'none';
+
+        $('#element_id').cxSelect({
+            selects: ['province', 'city'],
+            nodata: 'none'
+        })
+
+    
+    
+  
+  </script>
+<body>
+
+    <form action="" method="post">
+            <div class="pannel" id="m1" >
+            <div id="element_id">
+                    <select class="province"></select>
+                    <select class="city"></select>
+                </div>
+
+
+
+
+
+        商品分类
+        <select name="cate">
+                {% for i in cate %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+        
+        <br>
+        商品名称<input type="text" name="name" id="">
+        <br>
+        副标题<input type="text" name="fu">
+        <br>
+        商品品牌
+        <select name="brand">
+                {% for i in b %}
+            <option value="{{i.id}}">{{i.name}}</option>
+            {% endfor %}
+        </select>
+
+        <br>
+        商品介绍<input type="text" name="jieshao">
+        <br>
+
+        
+        商品货号<input type="text" name="huohao">
+        <br>
+
+        
+        商品售价<input type="text" name="shoujia">
+        <br>
+
+        
+        市场价<input type="text" name="shichangjia">
+        <br>
+
+        
+        商品库存<input type="text" name="count">
+        <br>
+
+       
+        计量单位<input type="text" name="danwei">
+        <br>
+
+        
+        商品重量<input type="text" name="zhongliang" value="0">
+        <br>
+
+        
+        排序<input type="text" name="paixu" value="0">
+        <br>
+        
+   </div>
+    
+        <button type="button" id="s1">点击进入下一阶段</button>
+
+        <div class="pannel" id="m2">
+
+        赠送积分<input type="text" name="jifen" value="0">
+        <br>
+
+        赠送成长值<input type="text" name="chengzhang" value="0">
+        <br>
+
+        积分购买限制<input type="text" name="xianzhi" value="0">
+        <br>
+
+        预告商品<input type="radio" name="aa" value="0">是
+        <input type="radio" name="aa" value="1">否
+        <br>
+
+        商品上架<input type="radio" name="bb" value="0">是
+        <input type="radio" name="bb" value="1">否
+        <br>
+
+        商品推荐<input type="checkbox" name="cc" value="0">新品
+        <input type="checkbox" name="dd" value="1">推荐
+        <br>
+
+
+        服务保障<input type="checkbox" name="ee" value="0">无忧退货
+        <input type="checkbox" name="ff" value="1">快速退款
+        <input type="checkbox" name="gg" value="2">免费包邮
+        <br>
+
+        详情页标题<input type="text" name="xiangqing">
+        <br>
+
+        详情页描述<input type="text" name="miaoshu">
+        <br>
+
+        商品关键字<input type="text" name="guanjianzi">
+        <br>
+
+        商品备注<input type="text" name="beizhu">
+        <br>
+
+        选择优惠方式<div>
+            <a href="javascript:wu();">无优惠</a>
+            <a href="javascript:tehui();">特惠促销</a>
+            <a href="javascript:huiyuan();">会员价格</a>
+            <a href="javascript:jieti();">阶梯价格</a>
+            <a href="javascript:manjian();">满减价格</a>
+        </div>
+        <div class="youhuifangshi"></div>
+        <button type="button" id="s2">点击进入下一阶段</button>
+
+        
+    </div>
+    <div class="pannel" id="m3">
+        属性类型
+        <select name="brand">
+            {% for i in good %}
+            <option value="{{i.id}}" onclick="shuxingleixing()">{{i.name}}</option>
+            {% endfor %}
+        </select>
+        <br>
+
+        商品规格：<br>
+        颜色
+        <input type="text" name="" id="">
+        <br>
+        尺码
+        <input type="checkbox" name="" id="">
+        <br>
+
+        商品参数<br>
+        使用人群
+        <input type="text" name="" id="">
+        <br>
+        风格
+        <input type="text" name="" id="">
+        <br>
+        使用场景
+        <input type="text" name="" id="">
+        <br>
+        上市时间
+        <input type="text" name="" id="">
+
+        <br>
+        商品相册
+        <input type="file" name="image_url">
+
+        <br>
+        <div class="form-group">
+                <label>规格参数</label>
+                <div class="fl"><input class="input_area" id="rich_content" name="guigecanshu"/></div>
+                
+        </div>
+
+        <button type="button" id="s3">点击进入下一阶段</button>
+    </div>
+        <input type="submit" value="提交">
+    </form>
+</div>
+</body>
+<script>
+    function wu(){
+        var html = ""
+        $(".youhuifangshi").html(html)
+    }
+
+    function tehui(){
+        var html = "开始时间<input type='text'><br>结束时间<input type='text'><br>促销价格<input type='text'>"
+        $(".youhuifangshi").html(html)
+    }
+
+    function huiyuan(){
+        var html = "黄金会员<input type='text'><br>白金会员<input type='text'><br>钻石会员<input type='text'>"
+        $(".youhuifangshi").html(html)
+    }
+
+    function jieti(){
+        var html = "<ul><li>数量  折扣  操作</li><li><input type='text'><input type='text'><a href=''>删除</a><a href=''>添加</a></li></ul>"
+        $(".youhuifangshi").html(html)
+    }
+
+    function manjian(){
+        var html = "<ul><li>满  立减  操作</li><li><input type='text'><input type='text'><a href=''>删除</a><a href=''>添加</a></li></ul>"
+        $(".youhuifangshi").html(html)
+    }
+
+    function shuxingleixing(){
+                 var leixing = $("input[name='brand']").val()
+                params = {'leixing':leixing}
+                alert(leixing)
+                    $.ajax({
+                        url:'/sadmin/shuxingleixing/',
+                        type:'post',
+                        dataType:'json',
+                        data:params,
+                        success:function(res){
+                            var code=res.code
+                            if(code==200){
+                                
+                            }else{
+                               
+                            }
+                        }
+                    })
+                    
+                }
+        tinymce.init({
+            //选择class为content的标签作为编辑器
+            selector: '#rich_content',
+            //方向从左到右
+            directionality:'ltr',
+            //语言选择中文
+            language:'zh_CN',
+            //高度为400
+            height:400,
+            width: '100%',
+            //按tab不换行
+            nonbreaking_force_tab: true,
+            });
+
+    
+            $(function(){
+                var $m1 = $("#m1");
+                var $m2 = $("#m2");
+                var $m3 = $("#m3");
+    
+                var $s1 = $("#s1");
+                var $s2 = $("#s2");
+                var $s3 = $("#s3");
+                $m1.show();
+                $m2.hide();
+                $m3.hide();
+                $s1.click(function(){
+                $m2.show();
+                $m1.hide();
+                $m3.hide();
+                });
+                $s2.click(function(){
+                $m3.show();
+                $m1.hide();
+                $m2.hide();
+                });
+    
+               
+                
+                })
+
+           
+            
+</script>
+</html>

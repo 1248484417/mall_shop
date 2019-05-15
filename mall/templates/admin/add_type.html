@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>商品编辑</title>
+    <script type="text/javascript" src="../static/admin/js/jquery-1.12.4.min.js"></script>
+  
+</head>
+<body class="inframe_body">
+    <form class="/sadmin/add_type/" method="post" enctype="multipart/form-data">
+        
+        <h3>添加分类</h3>
+        <div class="form-group"><label>分类名称：</label><input type="text" class="input_txt2" name="name" value="{{c.name}}"></div>
+        <div class="form-group">
+                <label>上级分类：</label>
+                <select class="sel_opt" name="keyword">
+                        <option value="0">无上级分类</option>
+                    {% for category in cate %}
+                   
+                         <option value="{{ category.id }}"  {% if goods.cid.id == category.id %} selected {% endif %}>{{ category.name }}</option>
+    
+                    {% endfor %}
+    
+                </select>
+                <div class="form-group"><label>数量单位：</label><input type="text" class="input_txt2" name="price" value="{{goods.price}}"></div>
+                <div class="form-group">
+
+                <div class="form-group"><label>排序：</label><input type="text" class="input_txt2" name="paixu" value="{{c.sort}}"></div>
+                <div class="form-group">
+
+                        <div class="form-group"><label>是否显示</label><input type="radio" name="aa" id="" value="0" {% if c.status == 0 %} checked {% endif %} >是<input type="radio" value="1" name="aa" {% if c.status == 1 %} checked {% endif %} >否</div>
+                        <div class="form-group">
+
+                        <div class="form-group"><label>是否显示在导航栏</label><input type="radio" name="bb" value="0" id="" {% if c.is_nav_status == 0 %} checked {% endif %} >是<input type="radio"  value="1" name="bb" id="" {% if c.is_nav_status == 1 %} checked {% endif %} >否</div>
+                        <div class="form-group">
+
+
+
+            
+        </div>
+        <!-- <div class="form-group"><label>摘要：</label><textarea class="input_multxt" name="digest"></textarea></div> -->
+        <div class="form-group"><label>分类图标</label>
+            <img src="{{goods.image_url}}" alt="索引图片" class="index_pic">
+            <input type="file" name="image_url"></div>
+
+            <label>筛选属性：</label>
+                <select class="sel_opt" name="shaixuan">
+                    {% for category in goods_type %}
+                         <option value="{{ category.id }}"  {% if goods.cid.id == category.id %} selected {% endif %}>{{ category.name }}</option>
+                    {% endfor %}
+    
+                </select>
+                <label><a href="">删除</a></label>
+
+        <div class="form-group">
+            <label>关键词：</label>
+        <input class="input_area" id="rich_content" name="guanjian" value="{{c.keyword}}"/>
+        
+        </div>
+        <div class="form-group">
+                <label>分类描述：</label>
+            <input class="input_area" id="rich_content" name="miaoshu" value="{{c.descrip}}"/>
+            
+            </div>
+
+
+
+        <input name="goods_id" class="goods_id" value="{{goods.id}}" hidden>
+        <div class="form-group">            
+            <input type="submit" value="提交" class="confirm">
+        </div>
+
+    </form>
+
+    <script>
+       
+    </script>
+</body>
+</html>

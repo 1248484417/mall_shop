@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/reset.css">
+    <link rel="stylesheet" type="text/css" href="/static/sadmin/css/main.css">
+    <script type="text/javascript" src="/static/admin/js/jquery-1.12.4.min.js"></script>
+    <script>
+            $(document).ready(function () {
+                        var time = new Date();
+                        var day = ("0" + time.getDate()).slice(-2);
+                        var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                        var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                        $('#date_info').val(today);
+                    })
+                $(document).ready(function () {
+                        var time = new Date();
+                        var day = ("0" + time.getDate()).slice(-2);
+                        var month = ("0" + (time.getMonth() + 1)).slice(-2);
+                        var today = time.getFullYear() + "-" + (month) + "-" + (day);
+                        $('#date_infos').val(today);
+                    })
+    </script>
+</head>
+<body>
+        {%if messages %}
+        {% for manage in messages%}
+        {{manage.message}}
+        {%endfor %}
+        {%endif%}
+    <form action="" method="post">
+            <label>上优惠卷类型：</label>
+            <select class="sel_opt" name="type" >
+                    <option value="0">全场赠券</option>
+                    <option value="1">会员赠券</option>
+                    <option value="2">购物赠券</option>
+                    <option value="3">注册赠券</option>
+            </select><br>
+            <label>优惠卷名称：</label><input type="text" class="input_txt2" name="name" value="{{c.name}}"><br>
+            <label>适用平台：</label>
+            <select class="sel_opt" name="pingtai">
+                    <option value="0">全平台</option>
+                    <option value="1">移动平台</option>
+                    <option value="2">PC平台</option>
+            </select><br>
+            <label>总发行数量：</label><input type="text" class="input_txt2" name="faxing" value="{{c.faxing}}"><br>
+            <label>面额：</label><input type="text" class="input_txt2" name="miane" value="{{c.miane}}">
+            <br><label>每人限领：</label><input type="text" class="input_txt2" name="limit" value="{{c.limit}}">
+            <br><label>使用门槛：</label><input type="text" class="input_txt2" name="doorsill" value="{{c.doorsill}}">
+            <br><label>有效期：</label><input type="date" id="date_info" class="date" name="start_time" value="{{ceckil.start_time}}"/>至<input type="date" id="date_infos" class="date" name="end_time" value="{{ceckil.end_time}}" /><br>
+            <label>可使用商品：</label>
+            全场通用<input type="radio" value="0" name="ff" id="" {% if c.goods_use == 0 %} checked {% endif %} >指定分类<input type="radio" value="1" name="ff" id="" {% if c.goods_use == 1 %} checked {% endif %} >指定商品<input type="radio" value="2" name="ff" id="" {% if c.goods_use == 2 %} checked {% endif %} ><br>
+            <label>备注：</label><textarea name="describe" value="{{c.describe}}"></textarea>
+        <input type="submit" value="提交">
+    </form>
+</body>
+</html>

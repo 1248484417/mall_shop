@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>新经资讯后台管理</title>
+    <link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+</head>
+
+    
+        <tr>
+            
+        </tr>
+ 
+<body>
+	<div class="breadcrub">
+		<h3><a href="/sadmin/brand__detail">添加</a></h3>
+		<form method="GET">
+				<input name="searchtitle" type="text" />&nbsp;&nbsp;<input type="submit" value="搜索" />
+			</form>
+		
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<td width="10%">编号</td><td width="10%">品牌名称</td><td width="10%">品牌首字母</td><td>logo</td><td>大logo</td>
+					<td>品牌故事</td>
+					<td width="10%">排序</td><td width="10%">是否品牌制造商</td><td width="10%">是否显示</td><td width="10%">操作</td>
+                    
+				</tr>
+				{% for item in res %}
+				<tr>
+					<td>{{item.id}}</td>
+					<td>{{item.name}}</td>
+					<td>{{item.first}}</td>
+					<td><img src="{{item.logo}}" alt=""></td>
+					<td><img src="{{item.b_logo}}" alt=""></td>
+					<td>{{item.story}}</td>
+					<td>{{item.sort}}</td>
+					<td>{{item.is_show}}</td>
+					<td>{{item.is_company}}</td>
+					<td width="20%">
+							<a href="/sadmin/brand__detail?id={{item.id}}">编辑</a>
+							<a href="/sadmin/del_brand?id={{item.id}}">删除</a>
+						</td>
+					
+				</tr>
+				{% endfor %}
+				
+
+				
+			</table>
+		</div>
+
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" name='name' class="input_txt3">
+                       
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>新经资讯后台管理</title>
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="../../static/admin/css/main.css">
+	<script type="text/javascript" src="../../static/admin/js/jquery-1.12.4.min.js"></script>
+	
+</head>
+
+<body>
+	<div class="breadcrub">
+			当前位置：新闻管理>新闻分类管理
+		</div>
+		<div class="pannel">
+			<table class="common_table">
+				<tr>
+					<th width="10%">id</th>
+					<th width="30%">类型名称</th>
+					<th width="10%">属性数量</th>
+					<th width="10%">参数数量</th>
+					<th width="20%">设置</th>
+					<th width="20%">操作</th>
+				</tr>
+				{% for i in goods %}
+				<tr>
+					
+						<th width="10%">{{i.id}}</th>
+						<th width="30%">{{i.name}}</th>
+						<th width="10%">{{i.attribute_count}}</th>
+						<th width="10%">{{i.param_count}}</th>
+						<th width="10%">
+						<a href="/sadmin/property_list?id=0" class="edit">属性列表</a>
+						<a href="/sadmin/property_list?id=1" class="delete">参数列表</a>
+						</th>
+						
+                    <td width="10%">
+						<a href="/sadmin/jia_leixing/?id={{i.id}}">编辑</a>
+						<input type="hidden" value="{{i.id}}" id="leixing">
+						<a href="/sadmin/delete_property?id={{i.id}}">删除</a>
+                    </td>
+				</tr>
+				
+				{% endfor %}
+				<tr>
+					<td colspan="10"><a href="/sadmin/jia_leixing/" class="addtype">增加类型</a></td>
+				</tr>
+			</table>
+		</div>
+
+		<div class="pop_con">
+			<div class="pop">
+				<form>
+					<h3>修改分类</h3>
+					<div class="form_group mt50">
+						<label class="input_label">分类名称：</label><input type="text" name='name' class="input_txt3">
+                       
+						<span class="error_tip">提示文字</span>
+					</div>
+					<div class="form_group line_top">
+						<input type="button" value="确定" class="confirm">&nbsp;&nbsp;&nbsp;&nbsp;
+						<input type="button" value="取消" class="cancel">
+					</div>
+				</form>
+			</div>
+			<div class="mask"></div>
+		</div>
+</body>
+
+</html>
