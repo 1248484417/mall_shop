@@ -26,10 +26,16 @@ urlpatterns = [
     path('news_list', views.News_list.as_view()),
     #品牌列表
     path('brand_list', views.Brand_list.as_view()),
-    #商品新品推荐列表
+    #更多品牌列表
+    path('brand_recommend', views.Brand_recommend.as_view()),
+    #更多商品新鲜好物推荐列表
     path('goods_product_list', views.Goods_product_list.as_view()),
-    #人气推荐列表
+    #商品新鲜好物推荐列表
+    path('goods_product', views.Goods_product.as_view()),
+    #更多人气推荐列表
     path('goods_popularity_list', views.Goods_popularity_list.as_view()),
+    #人气推荐列表
+    path('goods_popularity', views.Goods_popularity.as_view()),
     #猜你喜欢列表
     path('guess_like_list', views.Guess_like_list.as_view()),
     #专题列表
@@ -48,6 +54,16 @@ urlpatterns = [
     path('hot_topic_list', views.Hot_topic_list.as_view()),
     #话题详情页
     path('topic_detail_list', views.Topic_detail_list.as_view()),
+    #优选页面
+    path('optimization_list', views.Optimization_list.as_view()),
+    #优选详情页面
+    path('optimization_detail_list', views.Optimization_detail_list.as_view()),
+    #特惠首页
+    path('preference_list', views.Preference_list.as_view()),
+    #商品详情页
+    path('goods_list', views.Goods_list.as_view()),
+    #分类下的商品
+    path('category_goods_list', views.Category_goods_list.as_view()),
 
 
 ]

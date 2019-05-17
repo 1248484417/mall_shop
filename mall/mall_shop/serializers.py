@@ -2,18 +2,40 @@ from rest_framework import serializers
 from sadmin.models import *
 from werkzeug.security import generate_password_hash, check_password_hash
 
-#获取商品
+#获取指定商品字段
 class GoodsModelSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Goods
-        fields = ('id', 'name', 'price','note','pic')
+        fields = ('id', 'name', 'price', 'note', 'pic','promotionPrice')
 
-#获取SKU库存
-class PmsSkuStockModelSerializer(serializers.ModelSerializer):
+#获取商品
+class GoodslistModelSerializer(serializers.ModelSerializer):
+    goods_type_attribute = serializers.SerializerMethodField()
+    goods_type = serializers.SerializerMethodField()
+    
     class Meta:
-        model = PmsSkuStock
+        model = Goods
         fields = "__all__"
+
+    def get_goods_type_attribute(self, obj):
+        spe_c = goods_attribute_stock.objects.filter(goods_id=obj.id).all()
+        spe_cate = GoodsattributestockModelSerializer(spe_c, many=True)
+        return spe_cate.data
+    
+    def get_goods_type(self, obj):
+        ty = goods_type.objects.filter(id=obj.productAttributeCategoryId).all()
+        for i in ty:
+            spe_c = goods_type_attribute.objects.filter(type_id_id=i.id).all()
+            spe_cate = Goods_type_attributeModelSerializer(spe_c, many=True)
+        return spe_cate.data
+
+#获取sku库
+class GoodsattributestockModelSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = goods_attribute_stock
+        fields = "__all__"        
 
 #首页专题
 class SpecialModelSerializer(serializers.ModelSerializer):
@@ -73,6 +95,8 @@ class SpecialshopModelSerializer(serializers.ModelSerializer):
         for i in special_detail1:
             special_com = Special_comment.objects.filter(discourse_id=i.id).all()
             special_com_serializer = SpecialcommentModelSerializer(special_com, many=True)
+            i.read_count = i.read_count + 1
+            i.save()
         return {"special":special_serializer.data,"special_detail":special_com_serializer.data}
     
     def get_special_shop_detail(self, obj):
@@ -131,9 +155,21 @@ class CategorylistModelSerializer(serializers.ModelSerializer):
     def get_category_level(self, obj):
         print(obj.name, '=============')
         b = category.objects.filter(parent_id=obj.id).all()
-        adv = CategoryModelSerializer(b,many=True)
+        adv = GoodsModelSerializer(b,many=True)
         return adv.data
 
+#获取分类下的商品
+class CategorygoodslistModelSerializer(serializers.ModelSerializer):
+    category_goods = serializers.SerializerMethodField()
+
+    class Meta:
+        model = category
+        fields = ('__all__')
+
+    def get_category_goods(self, obj):
+        b = Goods.objects.filter(productCategoryId=obj.id).all()
+        adv = GoodsModelSerializer(b,many=True)
+        return adv.data
 
 #获取类型
 class goods_typeModelSerializer(serializers.ModelSerializer):
@@ -146,6 +182,31 @@ class labelModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = label
         fields = "__all__"
+
+#获取优选
+class SuperModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Super
+        fields = "__all__"
+
+#获取优选商品
+class SupergoodsModelSerializer(serializers.ModelSerializer):
+    goods_list = serializers.SerializerMethodField()
+    super_list = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Super_goods
+        fields = "__all__"
+
+    def get_goods_list(self, obj):
+        b = Goods.objects.filter(id=obj.goods_id)[:2]
+        adv = GoodsModelSerializer(b,many=True)
+        return adv.data
+    
+    def get_super_list(self, obj):
+        b = Super.objects.filter(id=obj.super_id).all()
+        adv = SuperModelSerializer(b,many=True)
+        return adv.data
 
 #获取话题图片
 class Discourse_comment_imgModelSerializer(serializers.ModelSerializer):

@@ -135,6 +135,8 @@ class brand(BaseModel,models.Model):
     is_company = models.IntegerField(default=0)
     is_recommend = models.IntegerField(default=0)
     min_price = models.IntegerField(default=0)
+    product_count = models.IntegerField(default=0)
+    product_comment_count = models.IntegerField(default=0)
 
     class Meta:
         db_table = "brand"
@@ -386,21 +388,32 @@ class Goods(BaseModel,models.Model):
     class Meta:
         db_table = 'goods'
 
-# sku的库存
+#sku的库存
 class PmsSkuStock(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    product_id = models.BigIntegerField(blank=True, null=True) #商品id
-    skuCode = models.CharField(max_length=64) # sku编码
-    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) #价格
-    stock = models.IntegerField(blank=True, null=True) # 库存
-    lowStock = models.IntegerField(blank=True, null=True) # 预警库存
-    sp1 = models.CharField(max_length=64, blank=True, null=True) # 销售属性
+    id = models.AutoField(primary_key=True)
+    product_id = models.BigIntegerField(blank=True, null=True)
+    #sku编码
+    sku_code = models.CharField(max_length=64)
+    price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #库存
+    stock = models.IntegerField(blank=True, null=True)
+    #预警库存
+    low_stock = models.IntegerField(blank=True, null=True)
+    #销售属性1
+    sp1 = models.CharField(max_length=64, blank=True, null=True)
     sp2 = models.CharField(max_length=64, blank=True, null=True)
-    pic = models.CharField(max_length=255, blank=True, null=True) # 展示图片
-    sale = models.IntegerField(blank=True, null=True,default=0) # 销量
-    promotionPrice = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True) # 单品促销价格
+    sp3 = models.CharField(max_length=64, blank=True, null=True)
+    #展示图片
+    pic = models.CharField(max_length=255, blank=True, null=True)
+    #销量
+    sale = models.IntegerField(blank=True, null=True)
+    #单品促销价格
+    promotion_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #锁定库存
+    lock_stock = models.IntegerField(blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = 'pms_sku_stock'
 
 #商品促销价格
@@ -655,14 +668,25 @@ class Special_comment(BaseModel,models.Model):
 
 
 #优选表
-class super(BaseModel,models.Model):
+class Super(BaseModel,models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     title = models.CharField(max_length=255)
     img = models.CharField(max_length=255)
+    sort = models.IntegerField(default=0)
+    show_status = models.IntegerField(default=0)
 
     class Meta:
         db_table = "super"
+
+#优选产品表
+class Super_goods(models.Model):
+    id = models.AutoField(primary_key=True)
+    goods_id = models.IntegerField()
+    super_id = models.IntegerField()
+
+    class Meta:
+        db_table = 'super_goods'
 
 #帮助/管理表
 class manage(BaseModel,models.Model):

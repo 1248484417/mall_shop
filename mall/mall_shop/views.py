@@ -10,6 +10,7 @@ from .serializers import *
 from rest_framework.response import Response
 import time
 from datetime import datetime
+from django_redis import get_redis_connection
 # Create your views here.
 
 
@@ -49,9 +50,21 @@ class Brand_list(APIView):
         mes['list'] = adv.data
         return Response(mes)
 
-class Goods_product_list(APIView):
+class Brand_recommend(APIView):
     """
-    商品新品推荐
+    更多品牌列表
+    """
+    def get(self, request):
+        mes = {}
+        b = brand.objects.filter(is_recommend=1).all()
+        adv = BrandModelSerializer(b,many=True)
+        mes['code'] = 200
+        mes['list'] = adv.data
+        return Response(mes)
+
+class Goods_product(APIView):
+    """
+    新鲜好物推荐
     """
     def get(self, request):
         mes = {}
@@ -61,17 +74,43 @@ class Goods_product_list(APIView):
         mes['list'] = adv.data
         return Response(mes)
 
-class Goods_popularity_list(APIView):
+class Goods_product_list(APIView):
+    """
+    更多新鲜好物推荐
+    """
+    def get(self, request):
+        mes = {}
+        b = Goods.objects.filter(newStatus=1).order_by("-sort")
+        adv = GoodsModelSerializer(b,many=True)
+        mes['code'] = 200
+        mes['list'] = adv.data
+        return Response(mes)
+
+
+class Goods_popularity(APIView):
     """
     人气推荐
     """
     def get(self, request):
         mes = {}
-        b = Goods.objects.order_by('-popularity')[:3]
+        b = Goods.objects.filter(popularity=1)[:3]
         adv = GoodsModelSerializer(b,many=True)
         mes['code'] = 200
         mes['list'] = adv.data
         return Response(mes)
+
+class Goods_popularity_list(APIView):
+    """
+    更多人气推荐
+    """
+    def get(self, request):
+        mes = {}
+        b = Goods.objects.filter(popularity=1).order_by("-sort")
+        adv = GoodsModelSerializer(b,many=True)
+        mes['code'] = 200
+        mes['list'] = adv.data
+        return Response(mes)
+
 
 class Guess_like_list(APIView):
     """
@@ -122,7 +161,7 @@ class IndexFlashProduct(APIView):
 
 class Category_list(APIView):
     """
-    分类列表
+    商品分类列表
     """
     def get(self, request):
         mes = {}
@@ -130,6 +169,21 @@ class Category_list(APIView):
         adv = CategorylistModelSerializer(b,many=True)
         mes['code'] = 200
         mes['list'] = adv.data
+        return Response(mes)
+
+class Category_goods_list(APIView):
+    """
+    分类下的商品列表：需要传递分类ID
+    ?ids=id
+    """
+    def get(self, request):
+        mes = {}
+        ids = request.GET.get('ids', 1)
+        if ids:
+            b = category.objects.filter(id=ids).all()
+            adv = CategorygoodslistModelSerializer(b,many=True)
+            mes['code'] = 200
+            mes['list'] = adv.data
         return Response(mes)
 
 class Special_specate_list(APIView):
@@ -191,11 +245,76 @@ class Topic_detail_list(APIView):
     """
     def get(self,request):
         mes = {}
-        ids = request.GET.get('ids',1)
+        ids = request.GET.get('ids', 1)
+        # ip = request.META['REMOTE_ADDR']
+        # conn = get_redis_connecion('default')
+        # getip = conn.get(ip)
+        # print(ip)
         if ids:
-            spec = discourse_detail.objects.all()
-            special_detail = DiscoursedetailModelSerializer(spec,many=True)
+            spec = discourse_detail.objects.filter(id=ids).all()
+            special_detail = DiscoursedetailModelSerializer(spec, many=True)
+            for i in spec:
+                i.read_sum = i.read_sum + 1
+                i.save()
             mes['code'] = 200
             mes['list'] = special_detail.data
         return Response(mes)
+
+class Optimization_list(APIView):
+    """
+    优选页面
+    """
+    def get(self,request):
+        mes = {}
+        spec = Super_goods.objects.all()
+        special_detail = SupergoodsModelSerializer(spec,many=True)
+        mes['code'] = 200
+        mes['list'] = special_detail.data
+        return Response(mes)
+
+class Optimization_detail_list(APIView):
+    """
+    优选详情页面 需要传递参数优选ID
+    ?ids=id
+    """
+    def get(self,request):
+        mes = {}
+        ids = request.GET.get('ids',1)
+        if ids:
+            spec = Super_goods.objects.filter(super_id=ids).all()
+            special_detail = SupergoodsModelSerializer(spec,many=True)
+            mes['code'] = 200
+            mes['list'] = special_detail.data
+        return Response(mes)
+
+
+class Preference_list(APIView):
+    """
+    特惠首页
+    """
+    def get(self,request):
+        mes = {}
+        todaydate = datetime.now().strftime("%Y-%m-%d")
+        flashdate = Goods.objects.filter(
+        promotionStartTime__lte=todaydate, promotionEndTime__gte=todaydate).all()
+        good = GoodsModelSerializer(flashdate, many=True)
+        mes['code'] = 200
+        mes['list'] = good.data
+        return Response(mes)
+
+class Goods_list(APIView):
+    """
+    商品详情页面 需要传递参数商品ID
+    ?ids=id
+    """
+    def get(self,request):
+        mes = {}
+        ids = request.GET.get('ids',1)
+        if ids:
+            flashdate = Goods.objects.filter(id=ids).all()
+            good = GoodslistModelSerializer(flashdate, many=True)
+            mes['code'] = 200
+            mes['list'] = good.data
+        return Response(mes)
+
 
