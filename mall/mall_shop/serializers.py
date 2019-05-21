@@ -9,26 +9,32 @@ class GoodsModelSerializer(serializers.ModelSerializer):
         model = Goods
         fields = ('id', 'name', 'price', 'note', 'pic','promotionPrice')
 
-#获取商品
+#获取商品详情
 class GoodslistModelSerializer(serializers.ModelSerializer):
-    goods_type_attribute = serializers.SerializerMethodField()
     goods_type = serializers.SerializerMethodField()
+    pmsSkuStock = serializers.SerializerMethodField()
+    goods_brand = serializers.SerializerMethodField()
     
     class Meta:
         model = Goods
         fields = "__all__"
 
-    def get_goods_type_attribute(self, obj):
-        spe_c = goods_attribute_stock.objects.filter(goods_id=obj.id).all()
-        spe_cate = GoodsattributestockModelSerializer(spe_c, many=True)
-        return spe_cate.data
+    def get_goods_brand(self, obj):
+        ty = brand.objects.filter(id=obj.brandId).all()
+        brand_list = BrandModelSerializer(ty,many=True)
+        return brand_list.data
     
     def get_goods_type(self, obj):
         ty = goods_type.objects.filter(id=obj.productAttributeCategoryId).all()
-        for i in ty:
-            spe_c = goods_type_attribute.objects.filter(type_id_id=i.id).all()
-            spe_cate = Goods_type_attributeModelSerializer(spe_c, many=True)
-        return spe_cate.data
+        goods_type1 = goods_typeModelSerializer(ty,many=True)
+        return goods_type1.data
+    
+    def get_pmsSkuStock(self, obj):
+        ty = goods_attribute_stock.objects.filter(goods_id=obj.id).all()
+        sku = GoodsattributestockModelSerializer(ty,many=True)
+        return sku.data
+
+        
 
 #获取sku库
 class GoodsattributestockModelSerializer(serializers.ModelSerializer):
@@ -95,8 +101,6 @@ class SpecialshopModelSerializer(serializers.ModelSerializer):
         for i in special_detail1:
             special_com = Special_comment.objects.filter(discourse_id=i.id).all()
             special_com_serializer = SpecialcommentModelSerializer(special_com, many=True)
-            i.read_count = i.read_count + 1
-            i.save()
         return {"special":special_serializer.data,"special_detail":special_com_serializer.data}
     
     def get_special_shop_detail(self, obj):
@@ -104,11 +108,32 @@ class SpecialshopModelSerializer(serializers.ModelSerializer):
         special_serializer = GoodsModelSerializer(special_detail1, many=True)
         return special_serializer.data
 
+#获取商品的相关专题
+class SpeciaslModelSerializer(serializers.ModelSerializer):
+    Specias = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Special_shop
+        fields = "__all__"
+    
+    def get_Specias(self, obj):
+        print(obj.special_id.id,'==========')
+        s = Special.objects.filter(id=obj.special_id.id).all()
+        print(s)
+        spe = SpecialcateModelSerializer(s, many=True)
+        return spe.data
+
 #获取猜你喜欢
 class Guess_likeModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Guess_like
         fields = "__all__"
+
+#获取商品图文详情
+class GoodspicsModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = goods_pics
+        fields = ("pic","id")
 
 #获取秒杀时间段
 class QuentumModelSerializer(serializers.ModelSerializer):
@@ -131,6 +156,18 @@ class FlashProductModelSerializer(serializers.ModelSerializer):
         quen1 = QuentumModelSerializer(q, many=True)
         return {"seckill_time":quen1.data,"Goods":product_serializer.data}
 
+# 商品秒杀
+class goods_seckillModelSerializer(serializers.ModelSerializer):
+    product_detail = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Ceckil_goods_relation
+        fields = ('__all__')
+
+    def get_product_detail(self, obj):
+        q = Quentum.objects.filter(id=obj.quentum_id_id).all()
+        quen1 = QuentumModelSerializer(q, many=True)
+        return quen1.data
 
 #获取品牌
 class BrandModelSerializer(serializers.ModelSerializer):
@@ -173,9 +210,16 @@ class CategorygoodslistModelSerializer(serializers.ModelSerializer):
 
 #获取类型
 class goods_typeModelSerializer(serializers.ModelSerializer):
+    goods_type_attribute = serializers.SerializerMethodField()
+
     class Meta:
         model = goods_type
         fields = "__all__"
+    
+    def get_goods_type_attribute(self, obj):
+        b = goods_type_attribute.objects.filter(type_id_id=obj.id).all()
+        adv = Goods_type_attributeModelSerializer(b,many=True)
+        return adv.data
 
 #获取标签
 class labelModelSerializer(serializers.ModelSerializer):
@@ -266,7 +310,40 @@ class DiscoursecategoryModelSerializer(serializers.ModelSerializer):
         model = discourse_category
         fields = ("id","name")
 
+#获取购物车
+class cartModelSerializer(serializers.ModelSerializer):
+    cart_price = serializers.SerializerMethodField()
 
+    class Meta:
+        model = cart
+        fields = "__all__"
+    
+    def get_cart_price(self, obj):
+        p = goods_attribute_stock.objects.filter(goods_id=obj.goods_id).all()
+        g = GoodsattributestockModelSerializer(p,many=True)
+        return g.data
+
+#获取用户地址
+class scoreModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = score
+        fields = "__all__"
+
+#用户积分
+class AddressModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = address
+        fields = "__all__"
+
+
+#获取订单页面
+class OrdercartModelSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = cart
+        fields = "__all__"
 
 #获取话题详情
 class DiscoursedetailModelSerializer(serializers.ModelSerializer):
@@ -295,8 +372,39 @@ class DiscoursedetailModelSerializer(serializers.ModelSerializer):
         discourse_comm = Discourse_commentModelSerializer(discour_c, many=True)
         return {"hot_discourse":discou_comm.data,"discourse_list":discourse_comm.data}
         
+#添加购物车表
+class CartSerializer(serializers.Serializer):
+    user_id = serializers.IntegerField(required=True)
+    goods_id = serializers.IntegerField(required=True)
+    goods_name = serializers.CharField(required=True, max_length=255)
+    img = serializers.CharField(required=True, max_length=255)
+    sp1 = serializers.CharField(required=True, max_length=255)
+    count = serializers.IntegerField(required=True)
+    price = serializers.DecimalField(max_digits=8, decimal_places=2)
+ 
+ 
+    def create(self, validated_data):
+        return cart.objects.create(**validated_data)
 
+#获取商品评价
+class GoodscommentModelSerializer(serializers.ModelSerializer):
+   
+    class Meta:
+        model = Goods_comment
+        fields = "__all__"
+    
+#获取用户的优惠卷
+class User_labelModelSerializer(serializers.ModelSerializer):
+    discounts = serializers.SerializerMethodField()
 
+    class Meta:
+        model = user_label
+        fields = "__all__"
+    
+    def get_discounts(self, obj):
+        dis_cate = coupon.objects.filter(id=obj.coupon_id).all()
+        discou_cate = CouponModelSerializer(dis_cate,many=True)
+        return discou_cate.data
 
 
 
@@ -314,9 +422,11 @@ class DiscoursedetailModelSerializer(serializers.ModelSerializer):
 
 #获取类型属性
 class Goods_type_attributeModelSerializer(serializers.ModelSerializer):
+   
     class Meta:
         model = goods_type_attribute
         fields = "__all__"
+    
 
 #获取广告
 class AdvertisingModelSerializer(serializers.ModelSerializer):

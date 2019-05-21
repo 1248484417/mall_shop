@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_crontab',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,6 +42,10 @@ INSTALLED_APPS = [
     'sadmin',
     'mall_shop',
     'rest_framework',
+]
+
+CRONJOBS = [
+    ('*/1 * * * *', 'mall_shop.views.addpros') #分 时 日 月 周
 ]
 
 MIDDLEWARE = [
@@ -121,7 +126,7 @@ USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -142,7 +147,7 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {"max_connections": 100},
-            "PASSWORD":"admin",
+            "PASSWORD":123456,
         }
     }
 }

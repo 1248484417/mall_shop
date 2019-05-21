@@ -19,6 +19,7 @@ class sadmins(BaseModel,models.Model):
     login_time=models.DateTimeField()
     
     class Meta():
+        managed = False
         db_table = 'sadmins'
 
 #后台角色表
@@ -28,6 +29,7 @@ class roles(BaseModel,models.Model):
     status = models.IntegerField(default=1)
 
     class Meta():
+        managed = False
         db_table = 'roles'
 
 #用户角色关联表
@@ -37,6 +39,7 @@ class admin_roles(BaseModel,models.Model):
     admin_id = models.ForeignKey(sadmins, to_field='id', on_delete='CASCADE', related_name='admin_role')
 
     class Meta():
+        managed = False
         db_table = 'admin_roles'
 
 #权限表
@@ -48,6 +51,7 @@ class permission(BaseModel,models.Model):
     status = models.IntegerField(default=1)
 
     class Meta():
+        managed = False
         db_table = 'permission'
 
 #角色权限表
@@ -57,6 +61,7 @@ class role_permission(BaseModel,models.Model):
     permission_id = models.ForeignKey(permission, to_field='id', on_delete='CASCADE', related_name='permission_id')
 
     class Meta():
+        managed = False
         db_table = 'role_permission'
 
 #分类表
@@ -74,6 +79,7 @@ class category(BaseModel,models.Model):
     count_danwei = models.CharField(max_length=255)
 
     class Meta():
+        managed = False
         db_table = 'category'
 
 #商品类型表
@@ -84,6 +90,7 @@ class goods_type(BaseModel,models.Model):
     param_count = models.IntegerField(default=0)
     
     class Meta():
+        managed = False
         db_table = 'goods_type'
 
     def to_dict(self):
@@ -106,6 +113,7 @@ class goods_type_attribute(BaseModel,models.Model):
     type = models.IntegerField()
     
     class Meta():
+        managed = False
         db_table = 'goods_type_attribute'
 
     def to_dict(self):
@@ -120,6 +128,7 @@ class cate_attribute(BaseModel,models.Model):
     goods_type_attribute_id = models.ForeignKey(goods_type_attribute, to_field='id', on_delete='CASCADE', related_name='goods_type_attribute_id')
 
     class Meta():
+        managed = False
         db_table = 'cate_attribute'
 
 #品牌表
@@ -139,6 +148,7 @@ class brand(BaseModel,models.Model):
     product_comment_count = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "brand"
 
 
@@ -151,6 +161,7 @@ class Guess_like(BaseModel,models.Model):
     price = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "guess_like"
 
 #前台用户表
@@ -161,6 +172,7 @@ class user(BaseModel,models.Model):
     login_count = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "user"
 
 #用户信息表
@@ -178,6 +190,7 @@ class user_detail(BaseModel,models.Model):
     growth = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "user_detail"
 
 #用户成长值表
@@ -188,6 +201,7 @@ class growth(BaseModel,models.Model):
     user_id = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "growth"
 
 #用户积分表
@@ -199,6 +213,7 @@ class score(BaseModel,models.Model):
     action = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "score"
 
 #标签表
@@ -207,6 +222,7 @@ class label(BaseModel,models.Model):
     labelname = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "label"
 
 #话题分类表
@@ -215,6 +231,7 @@ class discourse_category(BaseModel,models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "discourse_category"
 
 #话题详情表
@@ -234,6 +251,7 @@ class discourse_detail(BaseModel,models.Model):
     dc_id = models.IntegerField(default=0) #所属分类id
 
     class Meta:
+        managed = False
         db_table = "discourse_detail"
 
 #话题标签表
@@ -243,6 +261,7 @@ class discourse_label(BaseModel,models.Model):
     discourse_detail_id = models.ForeignKey(discourse_detail, to_field='id', on_delete='CASCADE', related_name='discourse_detail_id')
 
     class Meta():
+        managed = False
         db_table = 'discourse_label'
 
 #用户话题收藏表
@@ -253,6 +272,7 @@ class discourse_collect(BaseModel,models.Model):
     Type = models.IntegerField(default=0) #1话题  2专题  3商品 4 品牌
 
     class Meta():
+        managed = False
         db_table = 'discourse_collect'
 
 #话题评论表
@@ -270,6 +290,7 @@ class discourse_comment(BaseModel,models.Model):
     collect_sum = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "discourse_comment"
 
 #话题评论图片表
@@ -279,6 +300,7 @@ class discourse_comment_img(BaseModel,models.Model):
     pic = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "discourse_comment_img"
 
 #评论点赞表
@@ -288,6 +310,7 @@ class comment_zan(BaseModel,models.Model):
     discourse_comment_id = models.ForeignKey(discourse_comment, to_field='id', on_delete='CASCADE', related_name='dc_id')
 
     class Meta():
+        managed = False
         db_table = 'comment_zan'
 
 #话题评论表
@@ -302,6 +325,7 @@ class discourse_award(BaseModel,models.Model):
     label_id = models.CharField(max_length=255) 
 
     class Meta:
+        managed = False
         db_table = "discourse_award"
 
 
@@ -316,6 +340,7 @@ class user_label(BaseModel,models.Model):
     status = models.IntegerField(default=0)
     
     class Meta:
+        managed = False
         db_table = "user_label"
 
 #喜欢的分类表
@@ -326,6 +351,7 @@ class like_category(BaseModel,models.Model):
 
     
     class Meta:
+        managed = False
         db_table = "like_category"
 
 #用户关注的品牌
@@ -334,8 +360,8 @@ class user_concern_brand(BaseModel,models.Model):
     user_id = models.ForeignKey(user, to_field='id', on_delete='CASCADE', related_name='user_brand_id')
     brand_id = models.ForeignKey(brand, to_field='id', on_delete='CASCADE', related_name='brand_id')
 
-    
     class Meta:
+        managed = False
         db_table = "user_concern_brand"
 
 # 商品信息表
@@ -386,9 +412,10 @@ class Goods(BaseModel,models.Model):
     popularity = models.IntegerField(default=0) #人气推荐
 
     class Meta:
+        managed = False
         db_table = 'goods'
 
-#sku的库存
+#s
 class PmsSkuStock(models.Model):
     id = models.AutoField(primary_key=True)
     product_id = models.BigIntegerField(blank=True, null=True)
@@ -425,6 +452,7 @@ class Goods_sales_price(models.Model):
     promotionEndTime = models.DateTimeField(blank=True, null=True,auto_now_add=True)     #结束时间
 
     class Meta:
+        managed = False
         db_table = 'goods_sales_price'
 
 #商品会员价格表
@@ -437,6 +465,7 @@ class Goods_member_price(models.Model):
 
 
     class Meta:
+        managed = False
         db_table = 'goods_member_price'
 
 #商品阶梯价格表
@@ -449,6 +478,7 @@ class Goods_fight(models.Model):
 
 
     class Meta:
+        managed = False
         db_table = 'goods_fight'
 
 #商品满减表
@@ -460,6 +490,7 @@ class Goods_full_price(models.Model):
 
 
     class Meta:
+        managed = False
         db_table = 'goods_full_price'
 
 #商品属性表
@@ -469,6 +500,7 @@ class goods_attribute_value(BaseModel,models.Model):
     attribute_id = models.ForeignKey(goods_type_attribute, to_field='id', on_delete='CASCADE', related_name='attribute_id')
 
     class Meta:
+        managed = False
         db_table = "goods_attribute_value"
 
 #商品属性库存表
@@ -486,6 +518,7 @@ class goods_attribute_stock(BaseModel,models.Model):
     lock_stocp = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "goods_attribute_stock"
 
 #商品相册表
@@ -495,6 +528,7 @@ class goods_pics(BaseModel,models.Model):
     pic = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "goods_pics"
 
 #优惠卷表
@@ -513,6 +547,7 @@ class coupon(models.Model):
     useType = models.IntegerField(default=0)  #可使用商品类型
 
     class Meta:
+        managed = False
         db_table = 'coupon'
 
 #指定商品优惠表
@@ -522,6 +557,7 @@ class goods_coupon(BaseModel,models.Model):
     goods_id = models.ForeignKey(Goods, to_field='id', on_delete='CASCADE', related_name='goods_id')
 
     class Meta:
+        managed = False
         db_table = "goods_coupon"
 
 #优惠卷分类表
@@ -531,6 +567,7 @@ class coupon_cate(BaseModel,models.Model):
     cate_id = models.ForeignKey(category, to_field='id', on_delete='CASCADE', related_name='category_id')
 
     class Meta():
+        managed = False
         db_table = 'coupon_cate'
 
 #省市区表
@@ -540,6 +577,7 @@ class area(BaseModel,models.Model):
     name = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "area"
 
 #用户收获地址表
@@ -547,14 +585,15 @@ class address(BaseModel,models.Model):
     id = models.AutoField(primary_key=True)
     user_id = models.IntegerField()
     name = models.CharField(max_length=255)
-    country = models.IntegerField(default=0)
-    city = models.IntegerField(default=0)
-    area = models.IntegerField(default=0)
+    country = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    area = models.CharField(max_length=255)
     address = models.CharField(max_length=255)
     telphone = models.CharField(max_length=255)
     is_default = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "address"
 
 #购物车表
@@ -570,24 +609,9 @@ class cart(BaseModel,models.Model):
     img = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "cart"
 
-#用户订单表
-class user_orders(BaseModel,models.Model):
-    id = models.AutoField(primary_key=True)
-    order_sn = models.CharField(max_length=255)
-    user_id = models.IntegerField()
-    username = models.CharField(max_length=255)
-    total_money = models.DecimalField(max_digits=8, decimal_places=2)
-    coupon_money = models.DecimalField(max_digits=8, decimal_places=2)
-    actual_money = models.DecimalField(max_digits=8, decimal_places=2)
-    pay_type = models.IntegerField(default=0)
-    source = models.IntegerField(default=0)
-    status = models.IntegerField(default=0)
-    pay_code = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = "user_orders"
 
 #专题栏分类表
 class special_category(BaseModel,models.Model):
@@ -597,6 +621,7 @@ class special_category(BaseModel,models.Model):
     recommend = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "special_category"
 
 #专题表
@@ -629,6 +654,7 @@ class Special(models.Model):
     content = models.CharField(max_length=1000, blank=True, null=True)
 
     class Meta:
+        managed = False
         db_table = "special"
 
 #专题图片表
@@ -638,6 +664,7 @@ class special_pic(BaseModel,models.Model):
     pic = models.CharField(max_length=255)
 
     class Meta:
+        managed = False
         db_table = "special_pic"
 
 #专题商品关系表
@@ -647,6 +674,7 @@ class Special_shop(BaseModel,models.Model):
     special_id = models.ForeignKey(Special, to_field='id', on_delete='CASCADE', related_name='spc_id')
 
     class Meta:
+        managed = False
         db_table = "special_shop"
 
 #专题评论表
@@ -664,6 +692,7 @@ class Special_comment(BaseModel,models.Model):
     collect_sum = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "special_comment"
 
 
@@ -677,6 +706,7 @@ class Super(BaseModel,models.Model):
     show_status = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = "super"
 
 #优选产品表
@@ -686,16 +716,9 @@ class Super_goods(models.Model):
     super_id = models.IntegerField()
 
     class Meta:
+        managed = False
         db_table = 'super_goods'
 
-#帮助/管理表
-class manage(BaseModel,models.Model):
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255)
-    content = models.CharField(max_length=255)
-
-    class Meta:
-        db_table = "manage"
 
 
 #活动表
@@ -707,17 +730,19 @@ class Ceckil(models.Model):
     status=models.IntegerField()    #状态（1是0否）
 
     class Meta:
+        managed = False
         db_table = 'ceckil'
 
 #秒杀活动表
 class Ceckil_activity(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=30)   #名称
-    startTime=models.DateTimeField()    #开始时间
-    endTime=models.DateTimeField()     #结束时间
+    startTime=models.DateField()    #开始时间
+    endTime=models.DateField()     #结束时间
     status=models.IntegerField()    #状态（1是0否）
 
     class Meta:
+        managed = False
         db_table = 'ceckil_activity'
 
 
@@ -731,6 +756,7 @@ class Quentum(models.Model):
 
 
     class Meta:
+        managed = False
         db_table = 'quentum'
 
 #秒杀商品表
@@ -746,6 +772,7 @@ class Ceckil_goods(models.Model):
     sort = models.IntegerField()    #排序
 
     class Meta:
+        managed = False
         db_table = 'ceckil_goods'
 
 #秒杀时间段商品关系表
@@ -758,6 +785,7 @@ class Ceckil_goods_relation(models.Model):
 
 
     class Meta:
+        managed = False
         db_table = 'ceckil_goods_relation'
 
 #广告
@@ -774,6 +802,7 @@ class Advertising(models.Model):
     sort = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = 'advertising'
 
 #订单设置
@@ -786,6 +815,7 @@ class Dingdan_setting(models.Model):
     commentOvertime = models.IntegerField(default=0)
 
     class Meta:
+        managed = False
         db_table = 'dingdan_setting'
 
 
@@ -795,6 +825,7 @@ class member_grade(models.Model):
     name = models.CharField(max_length=255)   
 
     class Meta:
+        managed = False
         db_table = 'member_grade'
 
 #新闻表
@@ -803,4 +834,176 @@ class News(models.Model):
     name = models.CharField(max_length=255)   
 
     class Meta:
+        managed = False
         db_table = 'news'
+
+
+#商品评价表
+class Goods_comment(models.Model):
+    id = models.AutoField(primary_key=True)
+    goods_id = models.IntegerField(default=0)
+    member_nick_name = models.CharField(max_length=255)  
+    product_name = models.CharField(max_length=255)  
+    #评价星数：0->5
+    star = models.IntegerField(default=0)
+    #评价的ip
+    member_ip = models.CharField(max_length=64, blank=True, null=True)
+    create_time = models.DateTimeField(blank=True, null=True)
+    show_status = models.IntegerField(default=0)
+    #购买时的商品属性
+    product_attribute = models.CharField(max_length=255)  
+    collect_couont = models.IntegerField(default=0)
+    read_count = models.IntegerField(default=0)
+    content = models.CharField(max_length=255)
+    #上传图片地址，以逗号隔开
+    pics = models.CharField(max_length=255)  
+    #评论用户头像
+    member_icon = models.CharField(max_length=255)  
+    replay_count = models.IntegerField(default=0)
+
+    class Meta:
+        managed = False
+        db_table = 'goods_comment'
+
+
+#订单表
+class OmsOrder(models.Model):
+    #订单id
+    id = models.AutoField(primary_key=True)
+    member_id = models.BigIntegerField()
+    coupon_id = models.BigIntegerField(blank=True, null=True)
+    #订单编号
+    order_sn = models.CharField(max_length=64, blank=True, null=True)
+    #提交时间
+    create_time = models.DateTimeField(blank=True, null=True)
+    #用户帐号
+    member_username = models.CharField(max_length=64, blank=True, null=True)
+    #订单总金额
+    total_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #应付金额（实际支付金额）
+    pay_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #运费金额
+    freight_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #促销优化金额（促销价、满减、阶梯价）
+    promotion_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #积分抵扣金额
+    integration_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #优惠券抵扣金额
+    coupon_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #管理员后台调整订单使用的折扣金额
+    discount_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #'支付方式：0->未支付；1->支付宝；2->微信'
+    pay_type = models.IntegerField(blank=True, null=True)
+    #'订单来源：0->PC订单；1->app订单'
+    source_type = models.IntegerField(blank=True, null=True)
+    #'订单状态：0->待付款；1->待发货；2->已发货；3->已完成；4->已关闭；5->无效订单'
+    status = models.IntegerField(blank=True, null=True)
+    #'订单类型：0->正常订单；1->秒杀订单'
+    order_type = models.IntegerField(blank=True, null=True)
+    #物流公司(配送方式)
+    delivery_company = models.CharField(max_length=64, blank=True, null=True)
+    #物流单号
+    delivery_sn = models.CharField(max_length=64, blank=True, null=True)
+    #自动确认时间（天）'
+    auto_confirm_day = models.IntegerField(blank=True, null=True)
+    #可以获得的积分
+    integration = models.IntegerField(blank=True, null=True)
+    #可以活动的成长值
+    growth = models.IntegerField(blank=True, null=True)
+    #活动信息
+    promotion_info = models.CharField(max_length=100, blank=True, null=True)
+    #'发票类型：0->不开发票；1->电子发票；2->纸质发票'
+    bill_type = models.IntegerField(blank=True, null=True)
+    #发票抬头
+    bill_header = models.CharField(max_length=200, blank=True, null=True)
+    #发票内容
+    bill_content = models.CharField(max_length=200, blank=True, null=True)
+    #收票人电话
+    bill_receiver_phone = models.CharField(max_length=32, blank=True, null=True)
+    #收票人邮箱
+    bill_receiver_email = models.CharField(max_length=64, blank=True, null=True)
+    #收货人姓名
+    receiver_name = models.CharField(max_length=100)
+    #收货人电话
+    receiver_phone = models.CharField(max_length=32)
+    #收货人邮编
+    receiver_post_code = models.CharField(max_length=32, blank=True, null=True)
+    #省份/直辖市
+    receiver_province = models.CharField(max_length=32, blank=True, null=True)
+    #城市
+    receiver_city = models.CharField(max_length=32, blank=True, null=True)
+    #区
+    receiver_region = models.CharField(max_length=32, blank=True, null=True)
+    #详细地址
+    receiver_detail_address = models.CharField(max_length=200, blank=True, null=True)
+    #订单备注
+    note = models.CharField(max_length=500, blank=True, null=True)
+    #'确认收货状态：0->未确认；1->已确认'
+    confirm_status = models.IntegerField(blank=True, null=True)
+    #删除状态：0->未删除；1->已删除'
+    delete_status = models.IntegerField()
+    #下单时使用的积分
+    use_integration = models.IntegerField(blank=True, null=True)
+    #支付时间
+    payment_time = models.DateTimeField(blank=True, null=True)
+    #发货时间
+    delivery_time = models.DateTimeField(blank=True, null=True)
+    #确认收货时间
+    receive_time = models.DateTimeField(blank=True, null=True)
+    ##评价时间
+    comment_time = models.DateTimeField(blank=True, null=True)
+    #修改时间
+    modify_time = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'oms_order'
+
+#订单中所包含的商品
+class OmsOrderItem(models.Model):
+    id = models.AutoField(primary_key=True)
+    #订单id
+    order_id = models.BigIntegerField(blank=True, null=True)
+    #订单编号
+    order_sn = models.CharField(max_length=64, blank=True, null=True)
+    product_id = models.BigIntegerField(blank=True, null=True)
+    product_pic = models.CharField(max_length=500, blank=True, null=True)
+    product_name = models.CharField(max_length=200, blank=True, null=True)
+    product_brand = models.CharField(max_length=200, blank=True, null=True)
+    product_sn = models.CharField(max_length=64, blank=True, null=True)
+    #销售价格
+    product_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #购买数量
+    product_quantity = models.IntegerField(blank=True, null=True)
+    #商品sku编号
+    product_sku_id = models.BigIntegerField(blank=True, null=True)
+    #商品sku条码
+    product_sku_code = models.CharField(max_length=50, blank=True, null=True)
+    #商品分类id
+    product_category_id = models.BigIntegerField(blank=True, null=True)
+    #商品的销售属性
+    sp1 = models.CharField(max_length=100, blank=True, null=True)
+
+    sp2 = models.CharField(max_length=100, blank=True, null=True)
+    sp3 = models.CharField(max_length=100, blank=True, null=True)
+    #商品促销名称
+    promotion_name = models.CharField(max_length=200, blank=True, null=True)
+    #商品促销分解金额
+    promotion_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #优惠券优惠分解金额
+    coupon_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    ##积分优惠分解金额
+    integration_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #该商品经过优惠后的分解金额
+    real_amount = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+    #
+    gift_integration = models.IntegerField(blank=True, null=True)
+    gift_growth = models.IntegerField(blank=True, null=True)
+    #商品销售属性:[{"key":"颜色","value":"颜色"},{"key":"容量","value":"4G"}]'
+    product_attr = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'oms_order_item'
+
+

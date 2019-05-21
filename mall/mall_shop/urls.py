@@ -64,6 +64,28 @@ urlpatterns = [
     path('goods_list', views.Goods_list.as_view()),
     #分类下的商品
     path('category_goods_list', views.Category_goods_list.as_view()),
+    #购物车页面
+    path('goods_shopping', views.Goods_shopping.as_view()),
+    #商品详情
+    path('goods_pics', views.Goods_pics.as_view()),
+    #加入购物车
+    path('add_cart', views.Add_cart.as_view()),
+    #商品评价
+    path('goods_comment', views.Goods_comment1.as_view()),
+    #商品的专题
+    path('goods_special', views.Goods_special.as_view()),
+    #订单地址
+    path('order_address', views.Order_address.as_view()),
+    #订单商品
+    path('order_goods', views.Order_goods.as_view()),
+    #订单优惠
+    path('order_discounts', views.Order_discounts.as_view()),
+    #订单积分
+    path('order_score', views.Order_score.as_view()),
+
+
+
+
 
 
 ]
