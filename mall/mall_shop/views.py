@@ -438,22 +438,22 @@ class Goods_list(APIView):
     """
     def get(self,request):
         mes = {}
-        ids = request.GET.get('ids', 1)
-        conn = get_redis_connection('default')
-        good_list = conn.hget("shop_" + str(ids), '1')
+        ids = request.GET.get('ids', 53467)
+        # conn = get_redis_connection('default')
+        # good_list = conn.hget("shop_" + str(ids), '1')
         if ids:
-            if good_list:
-                goodlist = eval(good_list)
-                goods = json.loads(goodlist['goods'])
-                seckill = json.loads(goodlist['seckill'])
-                mes['code'] = 200
-                mes['list'] = goods
-                mes['seckill'] = seckill
-            else:
-                flashdate = Goods.objects.filter(id=ids).all()
-                good = GoodslistModelSerializer(flashdate, many=True)
-                mes['code'] = 200
-                mes['list'] = good.data
+            # if good_list:
+            #     goodlist = eval(good_list)
+            #     goods = json.loads(goodlist['goods'])
+            #     seckill = json.loads(goodlist['seckill'])
+            #     mes['code'] = 200
+            #     mes['list'] = goods
+            #     mes['seckill'] = seckill
+            # else:
+            flashdate = Goods.objects.filter(id=ids).all()
+            good = GoodslistModelSerializer(flashdate, many=True)
+            mes['code'] = 200
+            mes['list'] = good.data
                 
         else:
             mes['code'] = 10010
@@ -616,6 +616,5 @@ class Order_discounts(APIView):
         mes['code'] = 200
         mes['list'] = cardetail.data
         return Response(mes)
-
 
 
