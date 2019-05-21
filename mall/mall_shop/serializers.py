@@ -17,7 +17,7 @@ class GoodslistModelSerializer(serializers.ModelSerializer):
     
     class Meta:
         model = Goods
-        fields = "__all__"
+        fields = ("id","name","brandId","productAttributeCategoryId","goods_type","pmsSkuStock","goods_brand","pic","giftGrowth","giftPoint","subTitle","description","stock","unit","weight","weight")
 
     def get_goods_brand(self, obj):
         ty = brand.objects.filter(id=obj.brandId).all()
